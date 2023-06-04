@@ -1,0 +1,49 @@
+{% extends 'store/main.html' %}
+{% load static %}
+
+{% block content %}
+  <form method="GET" action="{% url 'store' %}">
+    <div class="filtration">
+      <br>
+      <label for="sort">Sort By:</label>
+      <select id="sort" name="sort" class="form-select">
+        <option value="last_added">Last Added</option>
+        <option value="price_asc">Price: Low to High</option>
+        <option value="price_desc">Price: High to Low</option>
+      </select>
+      <button type="submit" class="btn btn-outline-successy">Apply</button>
+    </div>
+  </form>
+
+  <form method="GET" action="{% url 'store' %}">
+    <div class="input-group mb-3">
+      <input type="text" name="search_query" class="form-control" placeholder="Search for products">
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="submit">Search</button>
+      </div>
+    </div>
+  </form>
+
+  <div class="row">
+    {% for product in products %}
+      <div class="col-lg-4">
+        <img class="thumbnail" src="{{ product.imageURL }}">
+        <div class="box-element product">
+          <h6><strong>{{ product.name }}</strong></h6>
+          <hr>
+          <button
+            data-product="{{ product.id }}"
+            data-action="add"
+            class="btn btn-outline-secondary add-btn update-cart">
+            Add to Cart
+          </button>
+          <a class="btn btn-outline-success" href="#">View</a>
+          <h4 class="float-end"><strong>${{ product.price }}</strong></h4>
+        </div>
+      </div>
+    {% endfor %}
+    <br>
+    <hr>
+  </div>
+
+{% endblock content %}
